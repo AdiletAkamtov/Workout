@@ -1,4 +1,6 @@
 import { IoMdArrowBack } from 'react-icons/io'
+import { SlUser } from 'react-icons/sl'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../../../hooks/useAuth'
 
@@ -7,13 +9,29 @@ import Hamburger from '../hamburger/Hamburger'
 import styles from './Header.module.scss'
 
 const Header = ({ backLink }) => {
+	const { pathname } = useLocation()
 	const { isAuth } = useAuth()
+	const navigate = useNavigate()
+
 	return (
 		<header className={styles.header}>
-			<button onClick={() => {}}>
-				<IoMdArrowBack fontSize={29} />
-			</button>
-			{/* {userprofile} */}
+			{pathname != '/' ? (
+				<button
+					onClick={() => {
+						navigate(backLink)
+					}}
+				>
+					<IoMdArrowBack fontSize={29} />
+				</button>
+			) : (
+				<button
+					onClick={() => {
+						navigate('/profile')
+					}}
+				>
+					<SlUser fill='#fff' fontSize={25} />
+				</button>
+			)}
 			<Hamburger />
 		</header>
 	)
